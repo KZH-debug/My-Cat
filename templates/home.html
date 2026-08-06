@@ -5,44 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KZH Studio | Official Site</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Rockstar-inspired Header -->
     <header>
-        <div class="logo-container">
-            <img src="{{ url_for('static', filename='images/header-logo.png') }}" alt="Site Logo">
-        </div>
         <div class="hamburger-menu" id="hamburger">
             <div class="bar"></div>
             <div class="bar"></div>
             <div class="bar"></div>
         </div>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/header-logo.png') }}" alt="Site Logo">
+        </div>
+        <!-- Adds the small user profile icon on the right like Rockstar -->
+        <div class="header-spacer"><i class="fa-regular fa-user" style="font-size: 20px;"></i></div>
     </header>
 
-    <!-- Hero Section with Video Carousel -->
     <main>
-        <section class="hero-carousel">
-            <video class="carousel-video active" autoplay loop muted playsinline>
+        <!-- Added id="carousel" for swipe and scroll tracking -->
+        <section class="hero-carousel" id="carousel">
+            <video class="carousel-video active" muted playsinline>
                 <source src="{{ url_for('static', filename='videos/1.mp4') }}" type="video/mp4">
             </video>
-            <video class="carousel-video" autoplay loop muted playsinline>
+            <video class="carousel-video" muted playsinline>
                 <source src="{{ url_for('static', filename='videos/2.mp4') }}" type="video/mp4">
             </video>
-            <div class="carousel-controls">
-                <button id="prevBtn">&#10094;</button>
-                <button id="nextBtn">&#10095;</button>
+
+            <div class="hero-overlay">
+                <h4>GRAND THEFT AUTO VI</h4>
+                <h2>An Extended Look, Coming August 27</h2>
+                <div class="action-buttons">
+                    <a href="#" class="btn btn-primary">Learn More</a>
+                    <a href="#" class="btn btn-secondary">Pre-Order Now</a>
+                </div>
+            </div>
+
+            <div class="carousel-ui">
+                <div class="progress-track">
+                    <div class="progress-bar"><div class="progress-fill" id="fill-0"></div></div>
+                    <div class="progress-bar"><div class="progress-fill" id="fill-1"></div></div>
+                </div>
+                <button id="playPauseBtn" class="play-pause-btn"><i class="fa-solid fa-pause"></i></button>
             </div>
         </section>
     </main>
 
-    <!-- CD Projekt Red-inspired Footer -->
     <footer>
         <div class="footer-content">
             <img class="footer-logo" src="{{ url_for('static', filename='images/footer-logo.png') }}" alt="KZH Studio Logo">
-            <div class="social-links">
-                <a href="#">Twitter</a>
-                <a href="#">YouTube</a>
-                <a href="#">Instagram</a>
+                        <div class="social-links">
+                <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="https://tiktok.com" target="_blank"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://discord.com" target="_blank"><i class="fa-brands fa-discord"></i></a>
+                <a href="https://twitch.tv" target="_blank"><i class="fa-brands fa-twitch"></i></a>
             </div>
             <p>&copy; 2026 KZH STUDIO. All rights reserved.</p>
         </div>
@@ -51,4 +69,6 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
+
+
 

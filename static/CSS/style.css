@@ -1,148 +1,63 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
+html, body {
     background-color: #000;
     color: #fff;
-    font-family: Arial, sans-serif;
-    overflow-x: hidden;
-}
-
-/* Header (Rockstar-inspired) */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 30px;
-    background-color: #000;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-    border-bottom: 2px solid #222;
-}
-
-.logo-container img {
-    height: 50px;
-}
-
-.hamburger-menu {
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.hamburger-menu .bar {
-    width: 30px;
-    height: 4px;
-    background-color: #fff;
-    transition: 0.3s;
-}
-
-.hamburger-menu.active .bar:nth-child(1) {
-    transform: rotate(-45deg) translate(-6px, 6px);
-}
-.hamburger-menu.active .bar:nth-child(2) {
-    opacity: 0;
-}
-.hamburger-menu.active .bar:nth-child(3) {
-    transform: rotate(45deg) translate(-6px, -6px);
-}
-
-/* Video Carousel */
-.hero-carousel {
-    position: relative;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     width: 100%;
     height: 100vh;
-    margin-top: 80px; /* Offset for header */
-    overflow: hidden;
-    background-color: #111;
+    overflow: hidden; /* Removes unwanted scrollbars on PC and mobile */
 }
 
-.carousel-video {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; background-color: transparent; position: absolute; width: 100%; top: 0; z-index: 100; }
+.logo-container { display: flex; justify-content: center; flex: 1; }
+.logo-container img { height: 35px; object-fit: contain; }
+.header-spacer { width: 30px; text-align: right; }
+.hamburger-menu { cursor: pointer; display: flex; flex-direction: column; gap: 5px; width: 30px; }
+.hamburger-menu .bar { width: 25px; height: 2px; background-color: #fff; transition: 0.3s; }
+
+.hero-carousel { position: relative; width: 100%; height: 100vh; overflow: hidden; background-color: #000; display: flex; flex-direction: column; justify-content: flex-end; }
+
+/* object-fit: contain fixes the zoom issue! */
+.carousel-video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.5s ease; }
+.carousel-video.active { opacity: 1; z-index: 1; }
+
+.hero-overlay { position: relative; z-index: 10; padding: 0 30px 40px 30px; text-align: center; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); }
+.hero-overlay h4 { font-size: 12px; letter-spacing: 1px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; }
+.hero-overlay h2 { font-size: 28px; font-weight: 700; margin-bottom: 25px; line-height: 1.2; }
+.action-buttons { display: flex; gap: 15px; justify-content: center; margin-bottom: 30px; }
+.btn { padding: 12px 24px; font-size: 14px; font-weight: bold; text-decoration: none; border-radius: 4px; text-transform: uppercase; transition: 0.2s; }
+.btn-primary { background-color: #fff; color: #000; border: 2px solid #fff; }
+.btn-primary:hover { background-color: #e6e6e6; }
+.btn-secondary { background-color: rgba(0,0,0,0.4); color: #fff; border: 2px solid #fff; }
+.btn-secondary:hover { background-color: rgba(255,255,255,0.2); }
+
+.carousel-ui { position: relative; z-index: 10; padding: 0 30px 30px 30px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.progress-track { display: flex; flex: 1; gap: 10px; }
+.progress-bar { flex: 1; height: 3px; background-color: rgba(255, 255, 255, 0.3); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; width: 0%; background-color: #fff; transition: width 0.1s linear; }
+.play-pause-btn { background: none; border: none; color: white; font-size: 18px; cursor: pointer; padding: 5px; }
+
+footer { background-color: #0a0a0a; padding: 40px 20px; text-align: center; border-top: 3px solid #cc0000; }
+.footer-content { display: flex; flex-direction: column; align-items: center; gap: 25px; }
+.footer-logo { height: 60px; }
+
+/* Rockstar Style Social Links */
+.social-links { 
+    display: flex; 
+    justify-content: center; 
+    gap: 40px; 
+    margin: 10px 0; 
+}
+.social-links a { 
+    color: #fff; 
+    text-decoration: none; 
+    font-size: 22px; 
+    transition: color 0.3s ease; 
+}
+.social-links a:hover { 
+    color: #888; 
 }
 
-.carousel-video.active {
-    opacity: 1;
-    z-index: 1;
-}
-
-.carousel-controls {
-    position: absolute;
-    bottom: 50px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    z-index: 10;
-}
-
-.carousel-controls button {
-    background: rgba(0, 0, 0, 0.6);
-    color: white;
-    border: 2px solid white;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-size: 20px;
-    text-transform: uppercase;
-}
-
-.carousel-controls button:hover {
-    background: white;
-    color: black;
-}
-
-/* Footer (CD Projekt Red-inspired) */
-footer {
-    background-color: #111;
-    padding: 40px 20px;
-    text-align: center;
-    border-top: 4px solid #cc0000; /* Signature crisp red line */
-}
-
-.footer-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-}
-
-.footer-logo {
-    height: 80px;
-}
-
-.social-links {
-    display: flex;
-    gap: 15px;
-}
-
-.social-links a {
-    color: #fff;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: bold;
-    letter-spacing: 1px;
-}
-
-.social-links a:hover {
-    color: #cc0000;
-}
-
-p {
-    font-size: 12px;
-    color: #888;
-}
+p { font-size: 13px; color: #666; letter-spacing: 0.5px; }
 
