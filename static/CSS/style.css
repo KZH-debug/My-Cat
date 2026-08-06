@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+/* Header (Rockstar-inspired) */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 30px;
+    background-color: #000;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid #222;
+}
+
+.logo-container img {
+    height: 50px;
+}
+
+.hamburger-menu {
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hamburger-menu .bar {
+    width: 30px;
+    height: 4px;
+    background-color: #fff;
+    transition: 0.3s;
+}
+
+.hamburger-menu.active .bar:nth-child(1) {
+    transform: rotate(-45deg) translate(-6px, 6px);
+}
+.hamburger-menu.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.hamburger-menu.active .bar:nth-child(3) {
+    transform: rotate(45deg) translate(-6px, -6px);
+}
+
+/* Video Carousel */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin-top: 80px; /* Offset for header */
+    overflow: hidden;
+    background-color: #111;
+}
+
+.carousel-video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.carousel-video.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.carousel-controls {
+    position: absolute;
+    bottom: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 10;
+}
+
+.carousel-controls button {
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: 2px solid white;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.carousel-controls button:hover {
+    background: white;
+    color: black;
+}
+
+/* Footer (CD Projekt Red-inspired) */
+footer {
+    background-color: #111;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 4px solid #cc0000; /* Signature crisp red line */
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo {
+    height: 80px;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-links a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.social-links a:hover {
+    color: #cc0000;
+}
+
+p {
+    font-size: 12px;
+    color: #888;
+}
+

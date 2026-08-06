@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KZH Studio | Official Site</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
+</head>
+<body>
+    <!-- Rockstar-inspired Header -->
+    <header>
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/header-logo.png') }}" alt="Site Logo">
+        </div>
+        <div class="hamburger-menu" id="hamburger">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Video Carousel -->
+    <main>
+        <section class="hero-carousel">
+            <video class="carousel-video active" autoplay loop muted playsinline>
+                <source src="{{ url_for('static', filename='videos/1.mp4') }}" type="video/mp4">
+            </video>
+            <video class="carousel-video" autoplay loop muted playsinline>
+                <source src="{{ url_for('static', filename='videos/2.mp4') }}" type="video/mp4">
+            </video>
+            <div class="carousel-controls">
+                <button id="prevBtn">&#10094;</button>
+                <button id="nextBtn">&#10095;</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- CD Projekt Red-inspired Footer -->
+    <footer>
+        <div class="footer-content">
+            <img class="footer-logo" src="{{ url_for('static', filename='images/footer-logo.png') }}" alt="KZH Studio Logo">
+            <div class="social-links">
+                <a href="#">Twitter</a>
+                <a href="#">YouTube</a>
+                <a href="#">Instagram</a>
+            </div>
+            <p>&copy; 2026 KZH STUDIO. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
+
