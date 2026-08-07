@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Touch and Mouse Navigation Support
+    // Touch and Mouse Swipe Navigation Support
     let touchStartX = 0;
     let touchEndX = 0;
     const carousel = document.getElementById('carousel');
@@ -119,21 +119,6 @@ document.addEventListener('DOMContentLoaded', () => {
             touchEndX = e.changedTouches[0].screenX;
             handleSwipe();
         }, {passive: true});
-
-        carousel.addEventListener('wheel', e => {
-            e.preventDefault();
-            if (window.isWheelLocked) return;
-            window.isWheelLocked = true;
-            setTimeout(() => { window.isWheelLocked = false; }, 800);
-
-            if (e.deltaY > 0) {
-                let nextIndex = (currentIndex + 1) % videos.length;
-                showVideo(nextIndex);
-            } else {
-                let prevIndex = (currentIndex - 1 + videos.length) % videos.length;
-                showVideo(prevIndex);
-            }
-        }, { passive: false });
     }
 
     function handleSwipe() {
