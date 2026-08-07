@@ -144,10 +144,10 @@ header {
     opacity: 0.7;
 }
 
-/* Rockstar-style Footer */
+/* Professional Rockstar-style Footer */
 footer {
     background-color: #000; 
-    padding: 60px 20px 40px 20px;
+    padding: 80px 20px 60px 20px; /* Added elegant breathing room */
     text-align: center;
 }
 
@@ -155,20 +155,21 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px; /* Perfect spacing between icons, logo, and text */
+    gap: 45px; /* Perfect, professional spacing between the 3 elements */
 }
 
+/* 1. Social Links Formatting */
 .social-links { 
     display: flex; 
     justify-content: center; 
-    flex-wrap: wrap; /* Keeps them looking good on tiny phone screens */
-    gap: 30px; 
+    flex-wrap: wrap; 
+    gap: 35px; 
 }
 
 .social-links a { 
     color: #fff; 
     text-decoration: none; 
-    font-size: 20px; /* Sleek, professional size */
+    font-size: 22px; /* Sleek size */
     transition: color 0.3s ease; 
 }
 
@@ -176,15 +177,22 @@ footer {
     color: #888; 
 }
 
-/* KZH Studio Logo styling */
+/* 2. Logo Formatting */
 .footer-logo {
     height: 70px;
     object-fit: contain;
+    opacity: 0.9;
+    transition: opacity 0.3s ease;
 }
 
+.footer-logo:hover {
+    opacity: 1; /* Slight brighten effect on hover */
+}
+
+/* 3. Copyright Text Formatting */
 p { 
     font-size: 13px; 
-    color: #888; /* Slightly darker grey to match the Rockstar vibe */
+    color: #777; /* Subtle, mainstream website grey */
     letter-spacing: 0.5px; 
 }
 

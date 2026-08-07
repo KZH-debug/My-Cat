@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KZH Studio | Official Site</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='CSS/style.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Updated FontAwesome Link to v6.5.1 to ensure the X logo works -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
     <header>
@@ -42,6 +43,7 @@
     <!-- Professional Rockstar-style Footer -->
     <footer>
         <div class="footer-content">
+            <!-- 1. Social Media Icons -->
             <div class="social-links">
                 <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                 <a href="https://twitter.com" target="_blank" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
@@ -52,8 +54,10 @@
                 <a href="https://twitch.tv" target="_blank" aria-label="Twitch"><i class="fa-brands fa-twitch"></i></a>
             </div>
             
-            <img src="{{ url_for('static', filename='images/1000006671.png') }}" alt="KZH Studio Logo" class="footer-logo">
+            <!-- 2. KZH Studio Logo -->
+            <img src="{{ url_for('static', filename='images/footer-logo.png') }}" alt="KZH Studio Logo" class="footer-logo">
             
+            <!-- 3. Copyright Text -->
             <p>&copy; 2026 KZH Studio. All rights reserved.</p>
         </div>
     </footer>
