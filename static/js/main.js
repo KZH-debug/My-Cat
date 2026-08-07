@@ -1,108 +1,151 @@
-const hamburger = document.getElementById('hamburger');
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-});
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Hamburger Menu Animation Toggle
+    const hamburger = document.getElementById('hamburger');
+    if (hamburger) {
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+        });
+    }
 
-const videos = document.querySelectorAll('.carousel-video');
-const fills = document.querySelectorAll('.progress-fill');
-const playPauseBtn = document.getElementById('playPauseBtn');
-const icon = playPauseBtn.querySelector('i');
-const carousel = document.getElementById('carousel');
+    // 2. Video Carousel & Progress Bars Logic
+    const videos = document.querySelectorAll('.carousel-video');
+    const fills = document.querySelectorAll('.progress-fill');
+    const playPauseBtn = document.getElementById('playPauseBtn');
+    
+    if (videos.length === 0) return;
 
-let currentIndex = 0;
-let isPlaying = true;
-let isScrolling = false; 
+    let currentIndex = 0;
+    let videoDuration = 6000;
+    let startTime = null;
+    let animationFrameId = null;
+    let isPlaying = true;
+    let elapsedPausedTime = 0;
 
-// Start first video
-videos[currentIndex].play();
-
-function showVideo(index) {
-    videos.forEach((vid, i) => {
-        vid.classList.remove('active');
-        fills[i].style.width = '0%';
-        if (i === index) {
-            vid.classList.add('active');
-            vid.currentTime = 0;
-            if (isPlaying) vid.play();
+    function setVideoDuration() {
+        if (videos[currentIndex].duration && !isNaN(videos[currentIndex].duration)) {
+            videoDuration = videos[currentIndex].duration * 1000;
         } else {
+            videoDuration = 6000;
+        }
+    }
+
+    function showVideo(index) {
+        videos.forEach((vid, i) => {
+            vid.classList.remove('active');
             vid.pause();
+            vid.currentTime = 0;
+            if (fills[i]) fills[i].style.width = '0%';
+        });
+
+        currentIndex = index;
+        videos[currentIndex].classList.add('active');
+        
+        if (isPlaying) {
+            videos[currentIndex].play().catch(e => console.log("Autoplay blocked:", e));
         }
-    });
-}
 
-// Track duration for the Rockstar Progress Bars
-videos.forEach((vid, index) => {
-    vid.addEventListener('timeupdate', () => {
-        if (vid.classList.contains('active')) {
-            const percentage = (vid.currentTime / vid.duration) * 100;
-            fills[index].style.width = percentage + '%';
+        setVideoDuration();
+        startTime = performance.now();
+        elapsedPausedTime = 0;
+        if (isPlaying) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = requestAnimationFrame(updateCarousel);
         }
+    }
+
+    function updateCarousel(timestamp) {
+        if (!isPlaying) return;
+
+        if (!startTime) startTime = timestamp;
+        let elapsed = (timestamp - startTime) + elapsedPausedTime;
+        let progress = Math.min((elapsed / videoDuration) * 100, 100);
+
+        if (fills[currentIndex]) {
+            fills[currentIndex].style.width = progress + '%';
+        }
+
+        for (let i = 0; i < currentIndex; i++) {
+            if (fills[i]) fills[i].style.width = '100%';
+        }
+
+        if (elapsed < videoDuration) {
+            animationFrameId = requestAnimationFrame(updateCarousel);
+        } else {
+            let nextIndex = (currentIndex + 1) % videos.length;
+            showVideo(nextIndex);
+        }
+    }
+
+    videos[currentIndex].addEventListener('loadedmetadata', () => {
+        setVideoDuration();
     });
-    // Auto-play next video when finished
-    vid.addEventListener('ended', () => {
-        currentIndex = (currentIndex + 1) % videos.length;
-        showVideo(currentIndex);
-    });
+
+    showVideo(currentIndex);
+
+    // Play / Pause Toggle
+    if (playPauseBtn) {
+        playPauseBtn.addEventListener('click', () => {
+            isPlaying = !isPlaying;
+            const icon = playPauseBtn.querySelector('i');
+
+            if (isPlaying) {
+                if (icon) icon.className = "fa-solid fa-pause";
+                videos[currentIndex].play();
+                startTime = performance.now();
+                animationFrameId = requestAnimationFrame(updateCarousel);
+            } else {
+                if (icon) icon.className = "fa-solid fa-play";
+                videos[currentIndex].pause();
+                cancelAnimationFrame(animationFrameId);
+                if (startTime) {
+                    elapsedPausedTime += performance.now() - startTime;
+                }
+                startTime = null;
+            }
+        });
+    }
+
+    // Touch and Mouse Navigation Support
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const carousel = document.getElementById('carousel');
+
+    if (carousel) {
+        carousel.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        carousel.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        carousel.addEventListener('wheel', e => {
+            e.preventDefault();
+            if (window.isWheelLocked) return;
+            window.isWheelLocked = true;
+            setTimeout(() => { window.isWheelLocked = false; }, 800);
+
+            if (e.deltaY > 0) {
+                let nextIndex = (currentIndex + 1) % videos.length;
+                showVideo(nextIndex);
+            } else {
+                let prevIndex = (currentIndex - 1 + videos.length) % videos.length;
+                showVideo(prevIndex);
+            }
+        }, { passive: false });
+    }
+
+    function handleSwipe() {
+        const threshold = 50;
+        if (touchEndX < touchStartX - threshold) {
+            let nextIndex = (currentIndex + 1) % videos.length;
+            showVideo(nextIndex);
+        }
+        if (touchEndX > touchStartX + threshold) {
+            let prevIndex = (currentIndex - 1 + videos.length) % videos.length;
+            showVideo(prevIndex);
+        }
+    }
 });
-
-// Play / Pause Icon toggle
-playPauseBtn.addEventListener('click', () => {
-    const activeVid = videos[currentIndex];
-    if (isPlaying) {
-        activeVid.pause();
-        icon.classList.replace('fa-pause', 'fa-play');
-    } else {
-        activeVid.play();
-        icon.classList.replace('fa-play', 'fa-pause');
-    }
-    isPlaying = !isPlaying;
-});
-
-// --- MOBILE SWIPE LOGIC ---
-let touchStartX = 0;
-let touchEndX = 0;
-
-carousel.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-}, {passive: true});
-
-carousel.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleSwipe();
-}, {passive: true});
-
-function handleSwipe() {
-    const threshold = 50;
-    if (touchStartX - touchEndX > threshold) {
-        // Swiped Left - Next Video
-        currentIndex = (currentIndex + 1) % videos.length;
-        showVideo(currentIndex);
-    }
-    if (touchEndX - touchStartX > threshold) {
-        // Swiped Right - Previous Video
-        currentIndex = (currentIndex - 1 + videos.length) % videos.length;
-        showVideo(currentIndex);
-    }
-}
-
-// --- PC MOUSE WHEEL SCROLL LOGIC ---
-carousel.addEventListener('wheel', (e) => {
-    if (isScrolling) return; 
-    isScrolling = true; // Prevents skipping 10 videos in one scroll
-
-    if (e.deltaY > 0) {
-        // Scrolled Down - Next Video
-        currentIndex = (currentIndex + 1) % videos.length;
-        showVideo(currentIndex);
-    } else if (e.deltaY < 0) {
-        // Scrolled Up - Previous Video
-        currentIndex = (currentIndex - 1 + videos.length) % videos.length;
-        showVideo(currentIndex);
-    }
-
-    // Wait 1 second before allowing the user to scroll to the next video again
-    setTimeout(() => {
-        isScrolling = false;
-    }, 1000);
-}, {passive: true});
 
